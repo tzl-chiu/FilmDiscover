@@ -45,4 +45,4 @@ pip install -r requirements.txt
 
 Bash
 python3 app.py
-啟動後，開啟瀏覽器造訪 http://127
+啟動後，開啟瀏覽器造訪 http://127.0.0.1:5000 即可使用。
