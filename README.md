@@ -1,6 +1,3 @@
-# 
-[app.py](https://github.com/user-attachments/files/28845345/app.py)
-
 # 電影探索與推薦站 (Movie Discovery Site)
 
 這是一個使用 **Flask** 開發的電影推薦應用，整合了 **TMDB API**，支援熱門電影瀏覽、關鍵字搜尋，以及按年度/月份篩選的功能。
