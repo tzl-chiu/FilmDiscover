@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>我的電影推薦站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-5">
+    <h1 class="text-3xl font-bold text-center mb-10">熱門電影推薦</h1>
+    
+    <div class="flex justify-center mb-10">
+        <input type="text" id="searchInput" placeholder="搜尋電影..." class="p-2 rounded text-black w-64">
+        <button onclick="searchMovies()" class="bg-blue-600 px-4 py-2 ml-2 rounded">搜尋</button>
+    </div>
+
+
+    <div class="flex justify-center gap-4 mb-10">
+        <button onclick="loadMovies('popular')" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">熱門</button>
+        <button onclick="loadMovies('this_year')" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">今年上映</button>
+        <button onclick="loadMovies('this_month')" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">本月新片</button>
+    </div>
+
+    
+    <div id="movieGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
+    <div class="flex justify-center mt-10 gap-4">
+        <button onclick="changePage(-1)" class="bg-gray-700 px-6 py-2 rounded hover:bg-gray-600">上一頁</button>
+        <span id="pageIndicator" class="self-center font-bold">第 1 頁</span>
+        <button onclick="changePage(1)" class="bg-gray-600 px-6 py-2 rounded hover:bg-gray-500">下一頁</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
