@@ -15,18 +15,17 @@
 - **第三方服務**：The Movie Database (TMDB) API
 - **資料庫**：SQLite
 
-project/                      # 專案根目錄
-├── app.py                    # 核心：Flask 後端邏輯 (路由、API 串接)
-├── requirements.txt          # 清單：列出所有需要的函式庫 (如 flask, requests)
-├── static/                   # 存放「靜態檔案」 (不會變動的檔案)
-│   ├── css/
-│   │   └── style.css         # 網站樣式 (顏色、字體、排版)
-│   ├── js/
-│   │   └── main.js           # 前端互動邏輯 (fetch API、DOM 操作)
-│   └── images/               # 你網站自己的 Logo 或 Icon
-└── templates/                # 存放「HTML 樣板」
-    ├── index.html            # 首頁 (顯示電影清單、搜尋列)
-    └── movie_detail.html     # 電影詳細頁面 (預告片、電影介紹)
+```text
+project/
+├── app.py              # 核心：Flask 後端邏輯 (路由、API 串接、資料庫)
+├── requirements.txt    # 依賴清單：專案執行所需的函式庫
+├── static/             # 存放靜態檔案
+│   ├── css/            # 網站樣式 (Tailwind CSS/自定義樣式)
+│   ├── js/             # 前端邏輯 (API 請求、DOM 渲染)
+│   └── images/         # 專案圖片資源
+└── templates/          # HTML 樣板
+    ├── index.html      # 主頁面：搜尋與電影清單呈現
+    └── movie_detail.html # 電影詳情頁面
 
 ## 📦 安裝與執行
 
