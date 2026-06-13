@@ -1,31 +1,37 @@
-# 電影探索與推薦站 (Movie Discovery Site)
+# 🎬 FilmDiscover - 電影探索與深度分析站
 
-這是一個使用 **Flask** 開發的電影推薦應用，整合了 **TMDB API**，支援熱門電影瀏覽、關鍵字搜尋，以及按年度/月份篩選的功能。
+這是一個使用 **Flask** 開發的電影推薦應用，整合了 **TMDB API** 與 **Google Gemini AI**，不僅支援電影瀏覽與搜尋，更能為每一部電影提供 AI 生成的深度影評分析。
 
 ## 🚀 功能特色
-- **熱門電影瀏覽**：一鍵獲取當前最受歡迎的電影清單。
-- **智慧搜尋**：支援關鍵字搜尋，並具備 SQLite 資料庫快取機制，大幅提升二次查詢速度。
-- **分類篩選**：支援篩選「今年上映」及「本月新片」。
-- **分頁瀏覽**：流暢的上下頁翻頁功能，方便探索更多電影。
-- **響應式設計**：使用 Tailwind CSS 構建，手機與桌機皆有良好的閱讀體驗。
+
+* **熱門電影瀏覽：** 快速獲取當前最受歡迎的電影清單。
+* **智慧搜尋：** 支援關鍵字搜尋，內建 SQLite 資料庫快取機制，大幅提升查詢效能。
+* **分類篩選：** 輕鬆篩選「今年上映」及「本月新片」。
+* **AI 深度影評：** 一鍵喚起 Google Gemini AI，針對電影劇情與特色進行深度解析（支援 Markdown 渲染）。
+* **高效快取：** 影評分析結果自動儲存至 SQLite，重複查詢無需耗費額外 API 額度。
+* **現代介面：** 響應式設計，使用 Tailwind CSS 構建，具備骨架屏 (Skeleton) 優化等待體驗。
 
 ## 🛠 技術棧
-- **後端**：Python, Flask, Flask-SQLAlchemy
-- **前端**：HTML5, JavaScript (Async/Await), Tailwind CSS
-- **第三方服務**：The Movie Database (TMDB) API
-- **資料庫**：SQLite
+
+* **後端：** Python, Flask, Flask-SQLAlchemy
+* **前端：** HTML5, JavaScript (Async/Await), Tailwind CSS, Marked.js (Markdown 解析)
+* **人工智慧：** Google Gemini API (`gemini-2.5-flash`)
+* **第三方服務：** The Movie Database (TMDB) API
+* **資料庫：** SQLite
+
+## 📂 專案結構
 
 ```text
 project/
-├── app.py              # 核心：Flask 後端邏輯 (路由、API 串接、資料庫)
-├── requirements.txt    # 依賴清單：專案執行所需的函式庫
-├── static/             # 存放靜態檔案
-│   ├── css/            # 網站樣式 (Tailwind CSS/自定義樣式)
-│   ├── js/             # 前端邏輯 (API 請求、DOM 渲染)
-│   └── images/         # 專案圖片資源
-└── templates/          # HTML 樣板
-    ├── index.html      # 主頁面：搜尋與電影清單呈現
-    └── movie_detail.html # 電影詳情頁面
+├── app.py              # Flask 後端邏輯 (路由、API 串接、Gemini整合、資料庫操作)
+├── requirements.txt    # 依賴清單
+├── .env                # 環境變數 (存放 TMDB_KEY 與 genai_api_key)
+├── static/             
+│   ├── js/             # 前端邏輯 (movie_detail.js 處理非同步請求與渲染)
+│   └── ...
+└── templates/          
+    ├── index.html      # 搜尋頁面
+    └── movie_detail.html # 電影詳情與 AI 分析結果頁面
 
 ## 📦 安裝與執行
 
@@ -38,8 +44,11 @@ source venv/bin/activate
 
 Bash
 pip install -r requirements.txt
+
 設定 API Key
-在 app.py 中將 TMDB_KEY 替換為你自己的 TMDB API Key。
+在根目錄建立 .env 檔案，填入以下金鑰：
+TMDB_KEY=你的TMDB_API_KEY
+genai_api_key=你的Google_Gemini_API_KEY
 
 啟動應用
 
