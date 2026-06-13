@@ -1,34 +1,18 @@
-// 載入熱門電影
-async function fetchMovies(url = '/api/movies/popular') {
-    const res = await fetch(url);
-    const data = await res.json();
-    const grid = document.getElementById('movieGrid');
-    grid.innerHTML = ''; // 清空畫面
-
-    data.results.forEach(movie => {
-        const poster = movie.poster_path 
-            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-            : 'https://via.placeholder.com/500x750?text=無海報';
-
-        grid.innerHTML += `
-            <div class="bg-gray-800 rounded-lg p-2 hover:scale-105 transition">
-                <img src="${poster}" class="rounded w-full">
-                <h3 class="mt-2 font-bold text-sm">${movie.title}</h3>
-                <p class="text-xs text-gray-400">${movie.release_date}</p>
-            </div>
-        `;
-    });
-}
 
 // 搜尋功能
 async function searchMovies() {
     const query = document.getElementById('searchInput').value;
     if (!query) return;
-    fetchMovies(`/api/movies/search?q=${query}`);
+    // 直接請求後端搜尋 API
+    const response = await fetch(`/api/movies/search?q=${query}`);
+    const data = await response.json();
+    
+    // 直接使用渲染函式把結果丟進去
+    renderMovies(data.results);
 }
 
 // 網頁啟動時自動載入
-fetchMovies();
+loadMovies();
 
 
 
@@ -96,17 +80,38 @@ function renderMovies(movies) {
     const grid = document.getElementById('movieGrid');
     grid.innerHTML = ''; 
     
+    // 檢查是否有資料
+    if (!movies || movies.length === 0) {
+        grid.innerHTML = '<p class="text-center col-span-full">找不到相關電影</p>';
+        return;
+    }
+
     movies.forEach(movie => {
-        const poster = movie.poster_path 
-            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-            : 'https://via.placeholder.com/500x750?text=無海報';
-            
-        grid.innerHTML += `
-            <div class="bg-gray-800 p-4 rounded hover:scale-105 transition">
-                <img src="${poster}" class="w-full h-64 object-cover rounded">
-                <h2 class="mt-2 font-bold">${movie.title}</h2>
-                <p class="text-sm text-gray-400">${movie.release_date}</p>
-            </div>
-        `;
+        // 直接呼叫 generateCard 並塞進 grid
+        grid.innerHTML += generateCard(movie);
     });
+            
+        
+
 }
+
+// 在 main.js 生成電影卡片的地方 (假設你有一個 generateCard 函式)
+function generateCard(movie) {
+    const poster = movie.poster_path 
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+        : 'https://via.placeholder.com/500x750?text=無海報';
+
+    return `
+        <div class="bg-gray-800 p-4 rounded hover:scale-105 transition cursor-pointer" 
+             onclick="window.location.href='/movie/${movie.id}'">
+            <img src="${poster}" class="w-full h-64 object-cover rounded">
+            <h2 class="mt-2 font-bold truncate">${movie.title}</h2>
+            <p class="text-sm text-gray-400">${movie.release_date || '未知日期'}</p>
+        </div>
+    `;
+}
+
+// 確保這行有在最下面，且沒有被註解掉
+document.addEventListener("DOMContentLoaded", function() {
+    loadMovies('popular', 1);
+});

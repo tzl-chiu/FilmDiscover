@@ -1,4 +1,14 @@
-Flask==3.0.0
-Flask-SQLAlchemy==3.1.1
-requests==2.31.0
-SQLAlchemy==2.0.25
+# --- 網頁應用與資料庫 ---
+Flask==3.0.0            # 網站後端核心框架
+Flask-SQLAlchemy==3.1.1 # 管理資料庫連線
+SQLAlchemy==2.0.25      # 資料庫 ORM 工具
+
+# --- AI 與雲端服務 ---
+google-genai            # Google Gemini AI 核心 SDK
+python-dotenv           # 管理環境變數 (.env)
+requests==2.31.0        # 處理網路請求與爬蟲
+
+# --- 前端介面與數據 ---
+streamlit               # 快速打造 聊天網頁
+pandas                  # 處理電影資料分析
+numpy                   # 數學計算與資料矩陣
