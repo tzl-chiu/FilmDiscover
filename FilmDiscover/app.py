@@ -105,16 +105,16 @@ def movie_detail(movie_id):
     # 這裡你需要用 movie_id 去 TMDB 抓詳細資料
     # 接著把資料傳給一個新的 HTML 檔案 (movie_detail.html)
     return render_template('movie_detail.html', movie_id=movie_id)
-
+# 上面轉跳電影詳情頁面時，同時發送請求給 TMDB 拿資料
 @app.route('/api/movie/<int:movie_id>')
 def get_movie_detail(movie_id):
     # 這裡放你原本呼叫 TMDB 的邏輯
     url = f"{BASE_URL}/movie/{movie_id}?api_key={TMDB_KEY}&language=zh-TW"
     response = requests.get(url)
     return jsonify(response.json())
-    pass
 
 
+# 6 串接Gemini 分析電影
 @app.route('/api/ai-review/<int:movie_id>')
 def ai_review(movie_id):
     # 1. 接收前端參數
@@ -137,7 +137,16 @@ def ai_review(movie_id):
     try:
         print(f"DEBUG: 呼叫 Gemini 分析 - {movie_title}")
         client = genai.Client(api_key=os.getenv("genai_api_key"))
-        prompt = f"請針對電影《{movie_title}》進行深度分析，包括劇情亮點與推薦原因。"
+        prompt = f"""
+        請針對電影《{movie_title}》提供一份精簡的影評，字數控制在 600 字以內，包含以下重點：
+        
+        1. 值得推薦嗎？（用一句話總結是否值得進戲院或串流觀看）
+        2. 爛番茄評分：(如果不知道確切評分，請根據電影口碑給出大致評價指標)
+        3. 演員演技表現：(簡評主演的演技是否到位)
+        4. 觀影推薦原因：(簡單說明推薦或不推薦的理由)
+        
+        請以客觀且精煉的語氣回答。
+        """
         
         response = client.models.generate_content(
             model='gemini-2.5-flash',
