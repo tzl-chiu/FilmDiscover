@@ -8,16 +8,29 @@ import os
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movie_cache.db' # 建立一個本地的資料庫檔案
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # 關閉不必要的警告
+# --- 修改開始：根據環境自動切換資料庫 ---
+db_url = os.environ.get('DATABASE_URL')
+
+if db_url:
+    # 如果是在 Render 環境，使用 PostgreSQL
+    # 如果 Render 給的是 postgres://，SQLAlchemy 要求必須寫成 postgresql://
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+else:
+    # 如果在本地，使用 SQLite
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movie_cache.db'
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 db = SQLAlchemy(app)
+# --- 修改結束 ---
 
 # 定義資料庫表格結構
 class MovieCache(db.Model):
     # 用 movie_id 作為唯一的識別碼 (這對於電影詳情頁非常重要)
     movie_id = db.Column(db.Integer, primary_key=True) 
     # 搜尋用的關鍵字 (例如 "瑪利歐")，可以設為索引方便搜尋，但不一定要當主鍵
-    query = db.Column(db.String(100), nullable=True) 
+    query = db.Column(db.String(255), nullable=True) 
     # API 原始結果 (JSON)
     result = db.Column(db.Text, nullable=True) 
     # AI 分析結果
@@ -175,4 +188,6 @@ def ai_review(movie_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # 這裡加入 port 的偵測，確保部署後不會因為抓不到 port 而崩潰
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)

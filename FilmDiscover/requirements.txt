@@ -12,3 +12,5 @@ requests==2.31.0        # 處理網路請求與爬蟲
 streamlit               # 快速打造 聊天網頁
 pandas                  # 處理電影資料分析
 numpy                   # 數學計算與資料矩陣
+
+psycopg2-binary
