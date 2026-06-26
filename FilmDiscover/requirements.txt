@@ -14,3 +14,4 @@ pandas                  # 處理電影資料分析
 numpy                   # 數學計算與資料矩陣
 
 psycopg2-binary
+gunicorn
