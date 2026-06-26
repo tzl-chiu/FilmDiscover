@@ -2,6 +2,8 @@
 
 這是一個使用 **Flask** 開發的電影推薦應用，整合了 **TMDB API** 與 **Google Gemini AI**，不僅支援電影瀏覽與搜尋，更能為每一部電影提供 AI 生成的深度影評分析。
 
+已部署至Render  [https://filmdiscover.onrender.com](https://filmdiscover.onrender.com)
+
 ![圖片](https://i.ibb.co/zTpyrJR0/2026-06-16-22-19-52.png)
 
 
