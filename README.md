@@ -27,7 +27,7 @@
 ## 📂 專案結構
 
 ```text
-project/
+FilmDiscover/
 ├── app.py              # Flask 後端邏輯 (路由、API 串接、Gemini整合、資料庫操作)
 ├── requirements.txt    # 依賴清單
 ├── .env                # 環境變數 (存放 TMDB_KEY 與 genai_api_key)
